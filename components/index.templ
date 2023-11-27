@@ -1,0 +1,33 @@
+package components
+
+templ Index() {
+    <!doctype html>
+    <html>
+        <head>
+            <script src="/static/htmx.min.js"/>
+            <script src="https://unpkg.com/hyperscript.org@0.9.12"/>
+
+<!--   Commenting until styling is done         <link href="/static/output.css" rel="stylesheet"/> -->
+            <script src="https://cdn.tailwindcss.com"/>
+
+            <style>
+                .modal {
+                    transition: opacity 0.25s ease;
+                }
+                body.modal-active {
+                    overflow-x: hidden;
+                    overflow-y: visible !important;
+                }
+            </style>
+        </head>
+        <body class="min-h-screen">
+            <input type="text" name="title"
+                class="border-indigo-400 border-2"
+                hx-get="/game/search"
+                hx-trigger="keyup changed delay:500ms"
+                hx-target="#game-results"
+                placeholder="Search..."/>
+            <div id="game-results"></div>
+        </body>
+    </html>
+}

@@ -1,0 +1,15 @@
+package components
+
+import (
+        "fmt"
+
+        "github.com/m-macdonald/game-queue/services"
+)
+
+templ Results(searchResults services.HltbSearchResult) {
+    <ul>
+        for _, game := range searchResults.Data {
+           <li hx-get={ fmt.Sprint("/game/add?game-id=", game.GameId) } hx-target="body" hx-swap="beforeend">{ game.GameName }</li>
+        }
+    </ul>
+}

@@ -1,0 +1,64 @@
+package components
+
+import (
+        "fmt"
+
+        "github.com/m-macdonald/game-queue/services"
+)
+
+templ AddGameBody(gameDetails services.GameDetails) {
+    <div>
+        <input type="hidden" name="hltb-game-id" value={ fmt.Sprint(gameDetails.GameId) }/>
+        <div class="flex bg-slate-50 border rounded-md p-2">
+            <div id="image-container">
+                <img 
+                    src={ fmt.Sprint("https://howlongtobeat.com/games/", gameDetails.GameImage) } 
+                    class="h-52"/>
+            </div>
+            <div class="ml-2">
+                <div>
+                    <label>
+                        Title
+                    </label>
+                    <div>{ gameDetails.GameName }</div>
+                </div>
+                <div class="flex bg-slate-200 border rounded-md p-2">
+                    <div>
+                        <label>
+                            Main Story
+                        </label>
+                        <span>{ formatCompTime(gameDetails.CompMain) }</span>
+                    </div>
+                    <div>
+                        <label>
+                            Main Story + Sides
+                        </label>
+                        <span>{ formatCompTime(gameDetails.CompPlus) }</span>
+                    </div>
+                    <div>
+                        <label>
+                            100% Completion
+                        </label>
+                        <span>{ formatCompTime(gameDetails.Comp100) }</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <label class="block tracking-wide text-gray-700 text-xs font-bold mb-2" for="priority">
+            Priority
+        </label>
+        <input type="number" name="priority" min="1" class="appearance-none block bg-gray-200 text-gray-700 border rounded-py-3 mb-3 leading-tight focus:outline-none focus:bg-white"/>
+        <label class="block tracking-wide text-gray-700 text-xs font-bold mb-2" for="notes">
+            Notes
+        </label>
+        <textarea  name="notes" class="appearance-none block bg-gray-200 text-gray-700 border rounded-py-3 mb-3 leading-tight focus:outline-none focus:bg-white"/>
+    </div>
+}
+
+func formatCompTime(compTime int) string {
+    // Completion time appears to be tracked in seconds so here we convert to hours
+    // We lose some precision with this being an int, but I'm not concerned with that right now. I may fix later
+    compTime = compTime/60/60
+
+    return fmt.Sprint(compTime)
+}
